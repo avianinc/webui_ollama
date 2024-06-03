@@ -18,7 +18,10 @@ services:
     runtime: nvidia
 
   open_web_ui:
-    image: dyrnq/open-webui
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: open-web-ui
     deploy:
       resources:
         reservations:

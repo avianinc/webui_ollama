@@ -14,7 +14,7 @@ services:
     volumes:
       - ollama:/root/.ollama
     ports:
-      - "11434:11434"
+      - "0.0.0.0:11434:11434"
     runtime: nvidia
 
   open_web_ui:
@@ -30,41 +30,12 @@ services:
     volumes:
       - open-webui:/app/backend/data
     ports:
-      - "3000:8080"
+      - "0.0.0.0:3000:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
     runtime: nvidia
-
-  pipelines:
-    image: ghcr.io/open-webui/pipelines:main
-    deploy:
-      resources:
-        limits:
-          memory: 4g
-          cpus: '2.0'
-        reservations:
-          devices:
-            - capabilities: [gpu]
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    volumes:
-      - pipelines:/app/pipelines
-    ports:
-      - "9099:9099"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    restart: always
-    runtime: nvidia
-    networks:
-      - app-network
 
 volumes:
   ollama:
   open-webui:
-  pipelines:
-
-networks:
-  app-network:
-    driver: bridge

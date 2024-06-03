@@ -5,22 +5,30 @@ services:
     image: ollama/ollama:latest
     deploy:
       resources:
+        limits:
+          memory: 4g
+          cpus: '2.0'
         reservations:
           devices:
             - capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_VISIBLE_DEVICES=0,1,2,3
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     volumes:
       - ollama:/root/.ollama
     ports:
       - "11434:11434"
     runtime: nvidia
+    networks:
+      - app-network
 
   open_web_ui:
-    image: dyrnq/open-webui
+    image: ghcr.io/open-webui/open-webui:main
     deploy:
       resources:
+        limits:
+          memory: 4g
+          cpus: '2.0'
         reservations:
           devices:
             - capabilities: [gpu]
@@ -35,6 +43,8 @@ services:
       - "host.docker.internal:host-gateway"
     restart: always
     runtime: nvidia
+    networks:
+      - app-network
 
   pipelines:
     image: ghcr.io/open-webui/pipelines:main
