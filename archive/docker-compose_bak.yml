@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   ollama:
     image: ollama/ollama:latest
@@ -40,21 +42,32 @@ services:
 
   cloudflared:
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN_INT64_VPC1}
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
     network_mode: "host"
     environment:
-      - CLOUDFLARE_TOKEN=${CLOUDFLARE_TOKEN_INT64_VPC1}
+      - CLOUDFLARE_TOKEN=${CLOUDFLARE_TOKEN}
     restart: always
-  
-  neo4j:
-    image: neo4j:latest
+
+  pipelines:
+    build:
+      context: ./pipelines
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     environment:
-      - NEO4J_AUTH=neo4j/testpassword
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - PIPELINES_URLS="https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py"
     volumes:
-      - neo4j_data:/data
+      - pipelines:/app/pipelines
     ports:
-      - "7687:7687"
-      - "7474:7474"
+      - "9099:9099"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    runtime: nvidia
     networks:
       - app-network
 
@@ -65,4 +78,3 @@ volumes:
   ollama:
   open-webui:
   pipelines:
-  neo4j_data:
