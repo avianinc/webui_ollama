@@ -36,7 +36,7 @@ To stop the environment, run:
 docker-compose down
 ```
 
-**Connecting to the Components**
+**Connecting to the Compo**
 Here's a summary of how to access each component:
 
 1. **Ollama**:
