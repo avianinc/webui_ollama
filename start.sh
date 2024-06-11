@@ -5,8 +5,8 @@ docker-compose up -d
 
 # Build and run pipelines
 #docker build -t pipelines pipelines/.
-#docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -e PIPELINES_URLS="https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py" -v pipelines:/app/pipelines --name pipelines --restart always pipelines 
-docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -e GITHUB_TOKEN=$GITHUB_TOKEN -e PIPELINES_URLS="https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py" -v pipelines:/app/pipelines --name pipelines --restart always ghcr.io/open-webui/pipelines:main
+docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -e PIPELINES_URLS="https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py" -v pipelines:/app/pipelines --name pipelines --restart always pipelines 
+# docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -e GITHUB_TOKEN=$GITHUB_TOKEN -e PIPELINES_URLS="https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py" -v pipelines:/app/pipelines --name pipelines --restart always ghcr.io/open-webui/pipelines:main
 #docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -e GITHUB_TOKEN=$GITHUB_TOKEN -e PIPELINES_URLS=https://github.com/open-webui/pipelines/blob/main/examples/pipelines/rag/llamaindex_ollama_github_pipeline.py"" -v pipelines:/app/pipelines --name pipelines --restart always ghcr.io/open-webui/pipelines:main
 # docker run -d -p 9099:9099 --add-host=host.docker.internal:host-gateway -v pipelines:/app/pipelines --name pipelines --restart always ghcr.io/open-webui/pipelines:main
 
