@@ -1,0 +1,8 @@
+services:
+  cloudflared3:
+      image: cloudflare/cloudflared:latest
+      command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN_INT64_VPC3}
+      network_mode: "host"
+      environment:
+        - CLOUDFLARE_TOKEN=${CLOUDFLARE_TOKEN_INT64_VPC3}
+      restart: always
