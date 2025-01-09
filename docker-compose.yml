@@ -40,10 +40,10 @@ services:
 
   cloudflared:
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN_INT64_VPC1}
+    command: tunnel --no-autoupdate run --token eyJhIjoiMzI3MjZmZDdmNjUzZDQxZDhkNTNlZGM5Yjk5N2ZkZjciLCJ0IjoiODA1YjhmNzEtZmNmNi00MTYyLWJkNTQtOGU5YjMwMmI2NTdjIiwicyI6IlpUSTVZVFZoTnpVdE9UQTBNQzAwTTJFMkxUZ3lOell0WkdNMVlqY3hOek01T0RjMSJ9
     network_mode: "host"
     environment:
-      - CLOUDFLARE_TOKEN=${CLOUDFLARE_TOKEN_INT64_VPC1}
+      - CLOUDFLARE_TOKEN_INT64_VPC1=eyJhIjoiMzI3MjZmZDdmNjUzZDQxZDhkNTNlZGM5Yjk5N2ZkZjciLCJ0IjoiODA1YjhmNzEtZmNmNi00MTYyLWJkNTQtOGU5YjMwMmI2NTdjIiwicyI6IlpUSTVZVFZoTnpVdE9UQTBNQzAwTTJFMkxUZ3lOell0WkdNMVlqY3hOek01T0RjMSJ9
     restart: always
   
   neo4j:
@@ -64,7 +64,8 @@ services:
 
 networks:
   app-network:
-    external: true
+    # external: true
+    driver: bridge  # Use the default bridge driver
 
 volumes:
   ollama:
